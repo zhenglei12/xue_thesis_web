@@ -134,7 +134,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, _from, next) => {
-  document.title = (to.meta && to.meta.title) || "论文系统";
+  document.title = (to.meta && to.meta.title) || "法律论文系统";
   if (to.name != "login") {
     Promise.all([Auth.check(), Acl.check()])
       .then(() => {
