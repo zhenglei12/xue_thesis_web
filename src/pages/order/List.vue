@@ -10,7 +10,6 @@
           <span>总订金金额：{{ statistic.received_amount_count }}</span>
           <span>本月总标金额：{{ statistic.month_amount_count }}</span>
           <span>本月订金金额：{{ statistic.month_received_amount_count }}</span>
-        </span>
       </div>
       <a-button-group>
         <a-button v-acl="'order-export'" @click="toExport()">导出</a-button>
