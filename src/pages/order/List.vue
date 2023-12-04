@@ -6,12 +6,11 @@
     <div class="cus-table-header">
       <div class="statistic">
         <span v-if="statistic" v-acl="'order-statistics'">
-          <span>总金额：{{ statistic.amount_count }}</span>
-          <span>已回收金额：{{ statistic.received_amount_count }}</span>
-          <span>本月总金额：{{ statistic.month_amount_count }}</span>
-          <span>已回收金额：{{ statistic.month_received_amount_count }}</span>
+          <span>总标的金额：{{ statistic.amount_count }}</span>
+          <span>总订金金额：{{ statistic.received_amount_count }}</span>
+          <span>本月总标金额：{{ statistic.month_amount_count }}</span>
+          <span>本月订金金额：{{ statistic.month_received_amount_count }}</span>
         </span>
-        <span v-if="numbers" v-acl="'order-count.num'">文字统计：{{ numbers }}</span>
       </div>
       <a-button-group>
         <a-button v-acl="'order-export'" @click="toExport()">导出</a-button>
@@ -19,19 +18,19 @@
       </a-button-group>
     </div>
     <a-table
-      :columns="columns"
-      :data-source="collection.list"
-      :loading="collection.loading"
-      :pagination="{
+        :columns="columns"
+        :data-source="collection.list"
+        :loading="collection.loading"
+        :pagination="{
         total: collection.total,
         current: collection.page,
         pageSize: collection.pageSize,
         showSizeChanger: true,
       }"
-      :rowClassName="getRowClass"
-      bordered
-      rowKey="id"
-      @change="listChange"
+        :rowClassName="getRowClass"
+        bordered
+        rowKey="id"
+        @change="listChange"
     >
       <template slot="type" slot-scope="data">
         {{ taskTypeMap[data] }}
@@ -40,10 +39,10 @@
         {{ data.amount - data.received_amount > 0 ? data.amount - data.received_amount : "已结清" }}
       </template>
       <template slot="image" slot-scope="data">
-        <img v-if="data" :src="data" alt="图片" class="image" @click="toPreview(data)" />
+        <img v-if="data" :src="data" alt="图片" class="image" @click="toPreview(data)"/>
       </template>
       <template slot="wk_image" slot-scope="data">
-        <img v-if="data" :src="data" alt="图片" class="image" @click="toPreview(data)" />
+        <img v-if="data" :src="data" alt="图片" class="image" @click="toPreview(data)"/>
       </template>
       <template slot="ask" slot-scope="data">
         <a v-if="data.detail_re" @click="toDownload(data, data.detail_re)">下载附件</a>
@@ -59,37 +58,37 @@
       <template slot="operate" slot-scope="data">
         <div class="cus-nowrap">
           <span v-acl="'order-update'">
-            <a-icon type="edit" title="编辑" @click="toEdit(data)" />
+            <a-icon type="edit" title="编辑" @click="toEdit(data)"/>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-edit.name'">
-            <a-icon type="api" title="分配编辑" @click="toAllot(data.id)" />
+            <a-icon type="api" title="分配编辑" @click="toAllot(data.id)"/>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-manuscript'">
-            <a-icon type="upload" title="上传稿件" @click="toUpload(data.id)" />
+            <a-icon type="upload" title="上传稿件" @click="toUpload(data.id)"/>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-logs'">
-            <a-icon type="file" title="日志" @click="toLog(data.id)" />
+            <a-icon type="file" title="日志" @click="toLog(data.id)"/>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-delete'" class="cus-pointer">
             <a-popconfirm title="确认删除？" @confirm="toDelete(data.id)">
-              <a-icon type="delete" title="删除" />
+              <a-icon type="delete" title="删除"/>
             </a-popconfirm>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-status'">
-            <a-icon type="swap" title="修改状态" @click="toStatus(data)" />
+            <a-icon type="swap" title="修改状态" @click="toStatus(data)"/>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-after'">
-            <a-icon type="rocket" title="售后" @click="toAfter(data)" />
+            <a-icon type="rocket" title="售后" @click="toAfter(data)"/>
             <a-divider type="vertical"></a-divider>
           </span>
           <span v-acl="'order-hard.grade'">
-            <a-icon type="stock" title="难度" @click="toGrade(data)" />
+            <a-icon type="stock" title="难度" @click="toGrade(data)"/>
           </span>
         </div>
       </template>
@@ -120,36 +119,33 @@
     <cus-log v-model="logVisible" :data="temp"></cus-log>
 
     <!-- 售后 -->
-    <cus-after v-model="afterVisible" :data="temp" @refresh="_getList" />
+    <cus-after v-model="afterVisible" :data="temp" @refresh="_getList"/>
 
     <!-- 难度 -->
-    <cus-grade v-model="gradeVisible" :data="temp" @refresh="_getList" />
+    <cus-grade v-model="gradeVisible" :data="temp" @refresh="_getList"/>
   </div>
 </template>
 
 <script>
 const condition = [
   {
+    key: "_time",
+    type: "date-in",
+    placeholder: ["开始截止时间", "结束截止时间"],
+  },
+  {
+    key: "_date",
+    type: "date-in",
+  },
+  {
+    key: "status",
+    type: "select",
+    options: Utils.mapToArray(orderStatusMap),
+    placeholder: "状态",
+  },
+  {
     key: "id",
     placeholder: "ID",
-  },
-  {
-    key: "subject",
-    placeholder: "题目",
-  },
-  {
-    key: "word_number",
-    placeholder: "字数",
-  },
-  // {
-  //   key: "name",
-  //   placeholder: "客户姓名",
-  // },
-  {
-    key: "task_type",
-    type: "select",
-    options: Utils.mapToArray(taskTypeMap),
-    placeholder: "任务类型",
   },
   {
     key: "staff_name",
@@ -160,51 +156,63 @@ const condition = [
     labelKey: "name",
     valueKey: "name",
   },
+
   {
-    key: "edit_name",
-    type: "select",
-    placeholder: "编辑名称",
-    showSearch: true,
-    options: [],
-    labelKey: "name",
-    valueKey: "name",
+    key: "name",
+    placeholder: "客户姓名",
   },
   {
-    key: "classify_id",
-    type: "cascader",
-    placeholder: "文档分类",
-    changeOnSelect: true,
-    options: [],
-    labelKey: "name",
-    valueKey: "id",
+    key: "wr_where",
+    placeholder: "客户等级",
   },
-  {
-    key: "status",
-    type: "select",
-    options: Utils.mapToArray(orderStatusMap),
-    placeholder: "状态",
-  },
-  {
-    key: "finance_check",
-    type: "select",
-    options: Utils.mapToArray(financeCheckMap),
-    placeholder: "财务审核状态",
-  },
-  {
-    key: "receipt_account_type",
-    type: "select",
-    options: Utils.mapToArray(accountTypeMap),
-    placeholder: "收款户",
-  },
-  {
-    key: "_date",
-    type: "date-in",
-  },
-  {
-    key: "_time",
-    type: "date-in",
-    placeholder: ["开始截止时间", "结束截止时间"],
-  },
+  // {
+  //   key: "task_type",
+  //   type: "select",
+  //   options: Utils.mapToArray(taskTypeMap),
+  //   placeholder: "任务类型",
+  // },
+  // {
+  //   key: "staff_name",
+  //   type: "select",
+  //   placeholder: "客服名称",
+  //   showSearch: true,
+  //   options: [],
+  //   labelKey: "name",
+  //   valueKey: "name",
+  // },
+  // {
+  //   key: "edit_name",
+  //   type: "select",
+  //   placeholder: "编辑名称",
+  //   showSearch: true,
+  //   options: [],
+  //   labelKey: "name",
+  //   valueKey: "name",
+  // },
+  // {
+  //   key: "classify_id",
+  //   type: "cascader",
+  //   placeholder: "文档分类",
+  //   changeOnSelect: true,
+  //   options: [],
+  //   labelKey: "name",
+  //   valueKey: "id",
+  // },
+
+  // {
+  //   key: "finance_check",
+  //   type: "select",
+  //   options: Utils.mapToArray(financeCheckMap),
+  //   placeholder: "财务审核状态",
+  // },
+  // {
+  //   key: "receipt_account_type",
+  //   type: "select",
+  //   options: Utils.mapToArray(accountTypeMap),
+  //   placeholder: "收款户",
+  // },
+
+
 ];
 
 const columns = [
@@ -213,106 +221,169 @@ const columns = [
     dataIndex: "id",
   },
   {
-    title: "任务类型",
-    dataIndex: "task_type",
-    scopedSlots: { customRender: "type" },
-  },
-  {
-    title: "题目",
-    dataIndex: "subject",
-  },
-  {
-    title: "字数",
-    dataIndex: "word_number",
-  },
-  {
-    title: "任务要求",
-    dataIndex: "task_ask",
-  },
-  {
     title: "创建时间",
     dataIndex: "created_at",
   },
+  // {
+  //   title: "任务类型",
+  //   dataIndex: "task_type",
+  //   scopedSlots: { customRender: "type" },
+  // },
   {
-    title: "截止时间",
-    dataIndex: "submission_time",
+    title: "name",
+    dataIndex: "客户名称",
   },
   {
-    title: "订单总额",
-    hidden: ["edit", "edit_admin"],
+    title: "标的金额",
     dataIndex: "amount",
   },
   {
-    title: "已收金额",
-    hidden: ["edit", "edit_admin"],
-    dataIndex: "received_all",
+    title: "合同比例",
+    dataIndex: "phone",
+  },
+
+  {
+    title: "订金金额",
+    dataIndex: "received_amount",
   },
   {
-    title: "未收尾款",
-    hidden: ["edit", "edit_admin"],
-    scopedSlots: { customRender: "money" },
-  },
-  {
-    title: "付款截图",
-    hidden: ["edit", "edit_admin"],
+    title: "订金截图",
+    // hidden: ["edit", "edit_admin"],
     dataIndex: "pay_img",
-    scopedSlots: { customRender: "image" },
+    scopedSlots: {customRender: "image"},
+  },
+  {
+    title: "尾款金额",
+    dataIndex: "end_received_amount",
   },
   {
     title: "尾款截图",
-    hidden: ["edit", "edit_admin"],
+    // hidden: ["edit", "edit_admin"],
     dataIndex: "receipt_account",
-    scopedSlots: { customRender: "wk_image" },
+    scopedSlots: {customRender: "image"},
+  },
+  {
+    title: "回款金额",
+    dataIndex: "twice_received_amount",
+  },
+  {
+    title: "增收截图",
+    // hidden: ["edit", "edit_admin"],
+    dataIndex: "twice_img",
+    scopedSlots: {customRender: "image"},
   },
   {
     title: "财务审核",
-    hidden: ["edit", "edit_admin"],
+ //   hidden: ["edit", "edit_admin"],
     dataIndex: "finance_check",
     customRender: (data) => financeCheckMap[data] ?? "-",
   },
   {
-    title: "售后金额",
-    hidden: ["edit", "edit_admin"],
-    dataIndex: "after_banlace",
-  },
-  {
-    title: "详细要求",
-    // dataIndex: "detail_re",
-    scopedSlots: { customRender: "ask" },
-  },
-  {
-    title: "状态",
-    dataIndex: "status",
-    scopedSlots: { customRender: "status" },
-  },
-  {
-    title: "创建客服",
-    dataIndex: "staff_name",
-  },
-  {
-    title: "责任编辑",
-    dataIndex: "edit_name",
-  },
-  {
-    title: "售后人员",
-    dataIndex: "after_name",
-  },
-  {
-    title: "难度等级",
-    dataIndex: "hard_grade",
-  },
-  {
-    title: "备注",
+    title: "客服备注",
     dataIndex: "remark",
   },
   {
-    title: "稿件下载",
-    // dataIndex: "manuscript",
-    scopedSlots: { customRender: "file" },
+    title: "所属客服",
+    dataIndex: "staff_name",
   },
   {
+    title: "法务",
+    dataIndex: "edit_name",
+  },
+  {
+    title: "售后金额",
+ //   hidden: ["edit", "edit_admin"],
+    dataIndex: "after_banlace",
+  },
+  {
+    title: "客户等级",
+    dataIndex: "wr_where",
+  },
+  {
+    title: "跟进进度",
+    dataIndex: "status",
+    scopedSlots: {customRender: "status"},
+  },
+  // {
+  //   title: "截止时间",
+  //   dataIndex: "submission_time",
+  // },
+  // {
+  //   title: "订单总额",
+  //   hidden: ["edit", "edit_admin"],
+  //   dataIndex: "amount",
+  // },
+  // {
+  //   title: "已收金额",
+  //   hidden: ["edit", "edit_admin"],
+  //   dataIndex: "received_all",
+  // },
+  // {
+  //   title: "未收尾款",
+  //   hidden: ["edit", "edit_admin"],
+  //   scopedSlots: { customRender: "money" },
+  // },
+  // {
+  //   title: "付款截图",
+  //   hidden: ["edit", "edit_admin"],
+  //   dataIndex: "pay_img",
+  //   scopedSlots: {customRender: "image"},
+  // },
+  // {
+  //   title: "尾款截图",
+  //   hidden: ["edit", "edit_admin"],
+  //   dataIndex: "receipt_account",
+  //   scopedSlots: {customRender: "wk_image"},
+  // },
+  // {
+  //   title: "财务审核",
+  //   hidden: ["edit", "edit_admin"],
+  //   dataIndex: "finance_check",
+  //   customRender: (data) => financeCheckMap[data] ?? "-",
+  // },
+  // {
+  //   title: "售后金额",
+  //   hidden: ["edit", "edit_admin"],
+  //   dataIndex: "after_banlace",
+  // },
+  // {
+  //   title: "详细要求",
+  //   // dataIndex: "detail_re",
+  //   scopedSlots: {customRender: "ask"},
+  // },
+  // {
+  //   title: "状态",
+  //   dataIndex: "status",
+  //   scopedSlots: {customRender: "status"},
+  // },
+  // {
+  //   title: "创建客服",
+  //   dataIndex: "staff_name",
+  // },
+  // {
+  //   title: "责任编辑",
+  //   dataIndex: "edit_name",
+  // },
+  // {
+  //   title: "售后人员",
+  //   dataIndex: "after_name",
+  // },
+  // {
+  //   title: "难度等级",
+  //   dataIndex: "hard_grade",
+  // },
+  // {
+  //   title: "备注",
+  //   dataIndex: "remark",
+  // },
+  // {
+  //   title: "稿件下载",
+  //   // dataIndex: "manuscript",
+  //   scopedSlots: {customRender: "file"},
+  // },
+  {
     title: "操作",
-    scopedSlots: { customRender: "operate" },
+    scopedSlots: {customRender: "operate"},
   },
 ];
 
@@ -327,7 +398,7 @@ import CusUpload from "./Upload";
 import CusLog from "./Log";
 import CusAfter from "./After";
 import CusGrade from "./Grade";
-import { taskTypeMap, orderStatusMap, financeCheckMap, accountTypeMap } from "./mapping";
+import {taskTypeMap, orderStatusMap, financeCheckMap, accountTypeMap} from "./mapping";
 
 export default {
   components: {
@@ -392,6 +463,7 @@ export default {
           return _;
         });
       }
+
       let temp = this.condition.find((_) => _.key == "classify_id");
       this.classifyList = fmtList(res.list);
       if (temp) {
@@ -473,10 +545,10 @@ export default {
       }
       this.download = true;
       Utils.download(url, `${item.id}-${url.split("/").pop()}`)
-        .then(() => {
-          this.$message.success("下载完成");
-        })
-        .finally(() => (this.download = false));
+          .then(() => {
+            this.$message.success("下载完成");
+          })
+          .finally(() => (this.download = false));
     },
     toUpload(e) {
       this.temp = e;
@@ -516,16 +588,16 @@ export default {
         _search.classify_id = _search.classify_id.push();
       }
       OrderApi.list(
-        Object.assign(
-          {},
-          {
-            page: this.collection.page,
-            pageSize: this.collection.pageSize,
-            staff_name: this.$auth.isService ? this.$auth.user().name : undefined,
-            edit_name: this.$auth.isEditor ? this.$auth.user().name : undefined,
-          },
-          _search
-        )
+          Object.assign(
+              {},
+              {
+                page: this.collection.page,
+                pageSize: this.collection.pageSize,
+                staff_name: this.$auth.isService ? this.$auth.user().name : undefined,
+                edit_name: this.$auth.isEditor ? this.$auth.user().name : undefined,
+              },
+              _search
+          )
       ).then((res) => {
         this.collection.list = res.list;
         this.collection.total = res.total;
@@ -546,16 +618,16 @@ export default {
         _search.classify_id = _search.classify_id.push();
       }
       OrderApi.export(
-        Object.assign(
-          {},
-          {
-            page: this.collection.page,
-            pageSize: this.collection.pageSize,
-            staff_name: this.$auth.isService ? this.$auth.user().name : undefined,
-            edit_name: this.$auth.isEditor ? this.$auth.user().name : undefined,
-          },
-          _search
-        )
+          Object.assign(
+              {},
+              {
+                page: this.collection.page,
+                pageSize: this.collection.pageSize,
+                staff_name: this.$auth.isService ? this.$auth.user().name : undefined,
+                edit_name: this.$auth.isEditor ? this.$auth.user().name : undefined,
+              },
+              _search
+          )
       ).then((res) => {
         if (res.type === "application/json") {
           try {

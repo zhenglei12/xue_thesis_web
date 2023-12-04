@@ -3,7 +3,7 @@
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <div class="logo" @click="goto('/')">
         <img v-if="collapsed" src="../assets/logo.png" alt="logo" />
-        <span v-else>论文系统</span>
+        <span v-else>法律论文系统</span>
       </div>
       <a-menu
         theme="dark"
