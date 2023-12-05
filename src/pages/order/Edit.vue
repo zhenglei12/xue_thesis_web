@@ -152,35 +152,57 @@
 <!--            <a-date-picker v-model="form.receipt_time" valueFormat="YYYY-MM-DD" />-->
 <!--          </a-form-model-item>-->
 <!--        </a-col>-->
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-model-item label="二次付款截图">
-            <a-upload
-              list-type="picture-card"
-              :file-list="imgList_2"
-              :customRequest="(e) => cusImgUpload('imgList_2', e)"
-              :remove="
+        <a-row>
+          <a-col span="12">
+            <a-form-model-item label="二次付款截图">
+              <a-upload
+                  list-type="picture-card"
+                  :file-list="imgList_2"
+                  :customRequest="(e) => cusImgUpload('imgList_2', e)"
+                  :remove="
                 () => {
                   imgList_2 = [];
                 }
               "
-              :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"
-              @preview="toPreview"
-            >
-              <div v-if="!imgList_2.length">
-                <a-icon type="plus" />
-                <div class="ant-upload-text">上传</div>
-              </div>
-            </a-upload>
-          </a-form-model-item>
-        </a-col>
+                  :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"
+                  @preview="toPreview"
+              >
+                <div v-if="!imgList_2.length">
+                  <a-icon type="plus" />
+                  <div class="ant-upload-text">上传</div>
+                </div>
+              </a-upload>
+            </a-form-model-item>
+          </a-col>
+      </a-row>
+<!--      <a-row>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="二次付款截图">-->
+<!--            <a-upload-->
+<!--              list-type="picture-card"-->
+<!--              :file-list="imgList_2"-->
+<!--              :customRequest="(e) => cusImgUpload('imgList_2', e)"-->
+<!--              :remove="-->
+<!--                () => {-->
+<!--                  imgList_2 = [];-->
+<!--                }-->
+<!--              "-->
+<!--              :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"-->
+<!--              @preview="toPreview"-->
+<!--            >-->
+<!--              <div v-if="!imgList_2.length">-->
+<!--                <a-icon type="plus" />-->
+<!--                <div class="ant-upload-text">上传</div>-->
+<!--              </div>-->
+<!--            </a-upload>-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
 <!--        <a-col span="12">-->
 <!--          <a-form-model-item label="二次收款日期">-->
 <!--            <a-date-picker v-model="form.twice_time" valueFormat="YYYY-MM-DD" />-->
 <!--          </a-form-model-item>-->
 <!--        </a-col>-->
-      </a-row>
+<!--      </a-row>-->
       <a-row>
         <a-col span="12">
           <a-form-model-item label="尾款截图">
