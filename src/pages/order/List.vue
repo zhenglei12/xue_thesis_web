@@ -128,11 +128,11 @@
 
 <script>
 const condition = [
-  {
-    key: "_time",
-    type: "date-in",
-    placeholder: ["开始截止时间", "结束截止时间"],
-  },
+  // {
+  //   key: "_time",
+  //   type: "date-in",
+  //   placeholder: ["开始截止时间", "结束截止时间"],
+  // },
   {
     key: "_date",
     type: "date-in",
@@ -230,8 +230,8 @@ const columns = [
   //   scopedSlots: { customRender: "type" },
   // },
   {
-    title: "name",
-    dataIndex: "客户名称",
+    title: "客户名称",
+    dataIndex: "name",
   },
   {
     title: "标的金额",
@@ -300,9 +300,8 @@ const columns = [
     dataIndex: "wr_where",
   },
   {
-    title: "跟进进度",
-    dataIndex: "status",
-    scopedSlots: {customRender: "status"},
+    title: "售后人员",
+    dataIndex: "after_name",
   },
   // {
   //   title: "截止时间",

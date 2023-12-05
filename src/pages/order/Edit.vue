@@ -11,24 +11,24 @@
     <a-form-model ref="form" :model="form" :label-col="{ span: 6 }" :wrapper-col="{ span: 17 }">
       <a-row>
         <a-col span="12">
-          <a-form-model-item label="题目" required>
-            <a-input v-model="form.subject" allow-clear />
+          <a-form-model-item label="客户名称" required>
+            <a-input v-model="form.name" allow-clear />
           </a-form-model-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="字数" required>
-            <a-input-number v-model="form.word_number" :min="0" :precision="0" />
+          <a-form-model-item label="合同比例" required>
+            <a-input-number v-model="form.phone" :min="0" :precision="0" />
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-model-item label="订单总额">
+          <a-form-model-item label="标的金额">
             <a-input-number v-model="form.amount" :min="0" :disabled="$auth.isService && isEdit" />
           </a-form-model-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="首款">
+          <a-form-model-item label="订金金额">
             <a-input-number
               v-model="form.received_amount"
               :min="0"
@@ -39,7 +39,7 @@
       </a-row>
       <a-row>
         <a-col span="12">
-          <a-form-model-item label="第二次收款">
+          <a-form-model-item label="回款金额">
             <a-input-number
               v-model="form.twice_received_amount"
               :min="0"
@@ -48,7 +48,7 @@
           </a-form-model-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="尾款">
+          <a-form-model-item label="尾款金额">
             <a-input-number
               v-model="form.end_received_amount"
               :min="0"
@@ -57,77 +57,77 @@
           </a-form-model-item>
         </a-col>
       </a-row>
+<!--      <a-row>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="任务类型" required>-->
+<!--            <a-select v-model="form.task_type" allowClear :dropdownMatchSelectWidth="false">-->
+<!--              <a-select-option v-for="(option, index) in typeList" :key="index" :value="option.value | string">-->
+<!--                {{ option.label }}-->
+<!--              </a-select-option>-->
+<!--            </a-select>-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="客户名称" required>-->
+<!--            <a-input v-model="form.name" allow-clear />-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--      </a-row>-->
+<!--      <a-row>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="旺旺名">-->
+<!--            <a-input v-model="form.want_name" allow-clear />-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--      </a-row>-->
+<!--      <a-form-model-item :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" label="写作要求">-->
+<!--        <a-textarea v-model="form.task_ask" :autoSize="{ minRows: 3, maxRows: 5 }" placeholder="写作要求" />-->
+<!--      </a-form-model-item>-->
+<!--      <a-row>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="详细要求" required>-->
+<!--            <a-upload-->
+<!--              :fileList="askList"-->
+<!--              :customRequest="(e) => cusImgUpload('askList', e)"-->
+<!--              :remove="-->
+<!--                () => {-->
+<!--                  askList = [];-->
+<!--                }-->
+<!--              "-->
+<!--            >-->
+<!--              <a-button>上传</a-button>-->
+<!--            </a-upload>-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="收款户">-->
+<!--            <a-select v-model="form.receipt_account_type" allowClear :dropdownMatchSelectWidth="false">-->
+<!--              <a-select-option v-for="(option, index) in accountList" :key="index" :value="option.value | string">-->
+<!--                {{ option.label }}-->
+<!--              </a-select-option>-->
+<!--            </a-select>-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--      </a-row>-->
+<!--      <a-row>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="交稿日期" required>-->
+<!--            <a-date-picker v-model="form.submission_time" valueFormat="YYYY-MM-DD" />-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="支付方式">-->
+<!--            <a-select v-model="form.pay_type" allowClear :dropdownMatchSelectWidth="false">-->
+<!--              <a-select-option v-for="(option, index) in payList" :key="index" :value="option.value | string">-->
+<!--                {{ option.label }}-->
+<!--              </a-select-option>-->
+<!--            </a-select>-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
+<!--      </a-row>-->
       <a-row>
         <a-col span="12">
-          <a-form-model-item label="任务类型" required>
-            <a-select v-model="form.task_type" allowClear :dropdownMatchSelectWidth="false">
-              <a-select-option v-for="(option, index) in typeList" :key="index" :value="option.value | string">
-                {{ option.label }}
-              </a-select-option>
-            </a-select>
-          </a-form-model-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-model-item label="客户名称" required>
-            <a-input v-model="form.name" allow-clear />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-model-item label="旺旺名">
-            <a-input v-model="form.want_name" allow-clear />
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-form-model-item :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" label="写作要求">
-        <a-textarea v-model="form.task_ask" :autoSize="{ minRows: 3, maxRows: 5 }" placeholder="写作要求" />
-      </a-form-model-item>
-      <a-row>
-        <a-col span="12">
-          <a-form-model-item label="详细要求" required>
-            <a-upload
-              :fileList="askList"
-              :customRequest="(e) => cusImgUpload('askList', e)"
-              :remove="
-                () => {
-                  askList = [];
-                }
-              "
-            >
-              <a-button>上传</a-button>
-            </a-upload>
-          </a-form-model-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-model-item label="收款户">
-            <a-select v-model="form.receipt_account_type" allowClear :dropdownMatchSelectWidth="false">
-              <a-select-option v-for="(option, index) in accountList" :key="index" :value="option.value | string">
-                {{ option.label }}
-              </a-select-option>
-            </a-select>
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-model-item label="交稿日期" required>
-            <a-date-picker v-model="form.submission_time" valueFormat="YYYY-MM-DD" />
-          </a-form-model-item>
-        </a-col>
-        <a-col span="12">
-          <a-form-model-item label="支付方式">
-            <a-select v-model="form.pay_type" allowClear :dropdownMatchSelectWidth="false">
-              <a-select-option v-for="(option, index) in payList" :key="index" :value="option.value | string">
-                {{ option.label }}
-              </a-select-option>
-            </a-select>
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col span="12">
-          <a-form-model-item label="首款截图">
+          <a-form-model-item label="订金截图">
             <a-upload
               list-type="picture-card"
               :file-list="imgList_1"
@@ -147,11 +147,11 @@
             </a-upload>
           </a-form-model-item>
         </a-col>
-        <a-col span="12">
-          <a-form-model-item label="首款日期">
-            <a-date-picker v-model="form.receipt_time" valueFormat="YYYY-MM-DD" />
-          </a-form-model-item>
-        </a-col>
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="首款日期">-->
+<!--            <a-date-picker v-model="form.receipt_time" valueFormat="YYYY-MM-DD" />-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
       </a-row>
       <a-row>
         <a-col span="12">
@@ -175,11 +175,11 @@
             </a-upload>
           </a-form-model-item>
         </a-col>
-        <a-col span="12">
-          <a-form-model-item label="二次收款日期">
-            <a-date-picker v-model="form.twice_time" valueFormat="YYYY-MM-DD" />
-          </a-form-model-item>
-        </a-col>
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="二次收款日期">-->
+<!--            <a-date-picker v-model="form.twice_time" valueFormat="YYYY-MM-DD" />-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
       </a-row>
       <a-row>
         <a-col span="12">
@@ -203,11 +203,11 @@
             </a-upload>
           </a-form-model-item>
         </a-col>
-        <a-col span="12">
-          <a-form-model-item label="尾款日期">
-            <a-date-picker v-model="form.end_time" valueFormat="YYYY-MM-DD" />
-          </a-form-model-item>
-        </a-col>
+<!--        <a-col span="12">-->
+<!--          <a-form-model-item label="尾款日期">-->
+<!--            <a-date-picker v-model="form.end_time" valueFormat="YYYY-MM-DD" />-->
+<!--          </a-form-model-item>-->
+<!--        </a-col>-->
       </a-row>
       <a-form-model-item :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" label="备注">
         <a-textarea v-model="form.remark" :autoSize="{ minRows: 3, maxRows: 5 }" placeholder="备注" />
