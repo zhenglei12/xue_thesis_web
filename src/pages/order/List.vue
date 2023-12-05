@@ -65,10 +65,10 @@
             <a-icon type="api" title="分配编辑" @click="toAllot(data.id)"/>
             <a-divider type="vertical"></a-divider>
           </span>
-          <span v-acl="'order-manuscript'">
-            <a-icon type="upload" title="上传稿件" @click="toUpload(data.id)"/>
-            <a-divider type="vertical"></a-divider>
-          </span>
+<!--          <span v-acl="'order-manuscript'">-->
+<!--            <a-icon type="upload" title="上传稿件" @click="toUpload(data.id)"/>-->
+<!--            <a-divider type="vertical"></a-divider>-->
+<!--          </span>-->
           <span v-acl="'order-logs'">
             <a-icon type="file" title="日志" @click="toLog(data.id)"/>
             <a-divider type="vertical"></a-divider>
@@ -87,9 +87,9 @@
             <a-icon type="rocket" title="售后" @click="toAfter(data)"/>
             <a-divider type="vertical"></a-divider>
           </span>
-          <span v-acl="'order-hard.grade'">
-            <a-icon type="stock" title="难度" @click="toGrade(data)"/>
-          </span>
+<!--          <span v-acl="'order-hard.grade'">-->
+<!--            <a-icon type="stock" title="难度" @click="toGrade(data)"/>-->
+<!--          </span>-->
         </div>
       </template>
     </a-table>
@@ -294,6 +294,11 @@ const columns = [
     title: "售后金额",
  //   hidden: ["edit", "edit_admin"],
     dataIndex: "after_banlace",
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    scopedSlots: {customRender: "status"},
   },
   {
     title: "客户等级",

@@ -9,7 +9,7 @@
     @ok="submit"
   >
     <a-form-model ref="form" :model="form" :label-col="{ span: 4 }" :wrapper-col="{ span: 19 }">
-      <a-form-model-item label="编辑人员">
+      <a-form-model-item label="法务人员">
         <a-select v-model="form.edit_name" allowClear :dropdownMatchSelectWidth="false" :options="editorOptions" />
       </a-form-model-item>
       <a-form-model-item label="售后人员">
