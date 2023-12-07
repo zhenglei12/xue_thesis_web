@@ -424,7 +424,7 @@ import CusUpload from "./Upload";
 import CusLog from "./Log";
 import CusAfter from "./After";
 import CusGrade from "./Grade";
-import {taskTypeMap, orderStatusMap, nameType, financeCheckMap, nameType} from "./mapping";
+import {taskTypeMap, orderStatusMap, nameType, financeCheckMap} from "./mapping";
 
 export default {
   components: {
