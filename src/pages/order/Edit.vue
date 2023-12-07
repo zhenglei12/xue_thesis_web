@@ -167,13 +167,12 @@
             </a-upload>
           </a-form-model-item>
         </a-col>
-      </a-row>
+
       <!--        <a-col span="12">-->
       <!--          <a-form-model-item label="首款日期">-->
       <!--            <a-date-picker v-model="form.receipt_time" valueFormat="YYYY-MM-DD" />-->
       <!--          </a-form-model-item>-->
       <!--        </a-col>-->
-      <a-row>
         <a-col span="12">
           <a-form-model-item label="增收截图">
             <a-upload
@@ -287,7 +286,7 @@ export default {
       imgList_3: [],
       askList: [],
       form: {},
-      options: ["C1", "C2", "B1", "B2", "A1", "A2", "S1", "S2", "S3"],
+      options: ["A", "B", "C", "D", "E", "F"],
       previewVisible: false,
       previewUrl: "",
     };

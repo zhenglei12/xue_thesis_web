@@ -243,7 +243,7 @@ const columns = [
   },
   {
     title: "客户类型",
-    dataIndex: "created_at",
+    dataIndex: "name_type",
     customRender: (data) => nameType[data] ?? "-",
   },
   // {

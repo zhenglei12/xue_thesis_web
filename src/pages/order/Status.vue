@@ -30,11 +30,11 @@
           </a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item v-if="form.status == 2" label="打回原因">
+      <a-form-model-item v-if="form.status == 2" label="说明">
         <a-textarea
           v-model="form.reason"
           :autoSize="{ minRows: 3, maxRows: 5 }"
-          placeholder="打回原因"
+          placeholder="说明"
         />
       </a-form-model-item>
       <a-form-model-item label="文件上传" v-if="form.status == 2" required>
@@ -50,12 +50,12 @@
           <a-button>上传</a-button>
         </a-upload>
       </a-form-model-item>
-      <a-form-model-item label="交稿时间" v-if="form.status == 2" required>
-        <a-date-picker
-          v-model="form.submission_time"
-          valueFormat="YYYY-MM-DD"
-        />
-      </a-form-model-item>
+<!--      <a-form-model-item label="交稿时间" v-if="form.status == 2" required>-->
+<!--        <a-date-picker-->
+<!--          v-model="form.submission_time"-->
+<!--          valueFormat="YYYY-MM-DD"-->
+<!--        />-->
+<!--      </a-form-model-item>-->
     </a-form-model>
   </a-modal>
 </template>
