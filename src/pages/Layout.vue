@@ -44,9 +44,9 @@
           <a-menu-item v-acl="'edit-statistics.all.list'" key="statistic-all" @click="goto('/statistic/all')"
             >总览</a-menu-item
           >
-          <a-menu-item v-acl="'edit-statistics.day.list'" key="statistic-day" @click="goto('/statistic/day')"
-            >日统计</a-menu-item
-          >
+<!--          <a-menu-item v-acl="'edit-statistics.day.list'" key="statistic-day" @click="goto('/statistic/day')"-->
+<!--            >日统计</a-menu-item-->
+<!--          >-->
           <a-menu-item v-acl="'staff-statistics.list'" key="statistic-user" @click="goto('/statistic/user')"
             >员工统计</a-menu-item
           >
