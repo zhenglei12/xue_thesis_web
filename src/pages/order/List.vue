@@ -6,10 +6,12 @@
     <div class="cus-table-header">
       <div class="statistic">
         <span v-if="statistic" v-acl="'order-statistics'">
-          <span>总标的金额：{{ statistic.amount_count }}</span>
-          <span>总订金金额：{{ statistic.received_amount_count }}</span>
-          <span>本月总标金额：{{ statistic.month_amount_count }}</span>
+          <span>总订单金额：{{ statistic.received_amount_count }}</span>
+          <span>总增收金额：{{ statistic.amount_count }}</span>
+          <span>总尾款金额：{{ statistic.end_received_amount_count }}</span>
           <span>本月订金金额：{{ statistic.month_received_amount_count }}</span>
+          <span>本月增收金额：{{ statistic.month_amount_count }}</span>
+          <span>本月尾款金额：{{ statistic.month_end_received_amount_count }}</span>
         </span>
       </div>
       <a-button-group>
@@ -65,10 +67,10 @@
             <a-icon type="api" title="分配编辑" @click="toAllot(data.id)"/>
             <a-divider type="vertical"></a-divider>
           </span>
-<!--          <span v-acl="'order-manuscript'">-->
-<!--            <a-icon type="upload" title="上传稿件" @click="toUpload(data.id)"/>-->
-<!--            <a-divider type="vertical"></a-divider>-->
-<!--          </span>-->
+          <!--          <span v-acl="'order-manuscript'">-->
+          <!--            <a-icon type="upload" title="上传稿件" @click="toUpload(data.id)"/>-->
+          <!--            <a-divider type="vertical"></a-divider>-->
+          <!--          </span>-->
           <span v-acl="'order-logs'">
             <a-icon type="file" title="日志" @click="toLog(data.id)"/>
             <a-divider type="vertical"></a-divider>
@@ -87,9 +89,9 @@
             <a-icon type="rocket" title="售后" @click="toAfter(data)"/>
             <a-divider type="vertical"></a-divider>
           </span>
-<!--          <span v-acl="'order-hard.grade'">-->
-<!--            <a-icon type="stock" title="难度" @click="toGrade(data)"/>-->
-<!--          </span>-->
+          <!--          <span v-acl="'order-hard.grade'">-->
+          <!--            <a-icon type="stock" title="难度" @click="toGrade(data)"/>-->
+          <!--          </span>-->
         </div>
       </template>
     </a-table>
@@ -165,6 +167,21 @@ const condition = [
     key: "wr_where",
     placeholder: "客户等级",
   },
+  {
+    key: "edit_name",
+    type: "select",
+    placeholder: "法务名称 ",
+    showSearch: true,
+    options: [],
+    labelKey: "name",
+    valueKey: "name",
+  },
+  {
+    key: "name_type",
+    type: "select",
+    options: Utils.mapToArray(nameType),
+    placeholder: "客户类型",
+  },
   // {
   //   key: "task_type",
   //   type: "select",
@@ -224,6 +241,11 @@ const columns = [
     title: "创建时间",
     dataIndex: "created_at",
   },
+  {
+    title: "客户类型",
+    dataIndex: "created_at",
+    customRender: (data) => nameType[data] ?? "-",
+  },
   // {
   //   title: "任务类型",
   //   dataIndex: "task_type",
@@ -274,7 +296,7 @@ const columns = [
   },
   {
     title: "财务审核",
- //   hidden: ["edit", "edit_admin"],
+    //   hidden: ["edit", "edit_admin"],
     dataIndex: "finance_check",
     customRender: (data) => financeCheckMap[data] ?? "-",
   },
@@ -292,7 +314,7 @@ const columns = [
   },
   {
     title: "售后金额",
- //   hidden: ["edit", "edit_admin"],
+    //   hidden: ["edit", "edit_admin"],
     dataIndex: "after_banlace",
   },
   {
@@ -402,7 +424,7 @@ import CusUpload from "./Upload";
 import CusLog from "./Log";
 import CusAfter from "./After";
 import CusGrade from "./Grade";
-import {taskTypeMap, orderStatusMap, financeCheckMap} from "./mapping";
+import {taskTypeMap, orderStatusMap, nameType, financeCheckMap, nameType} from "./mapping";
 
 export default {
   components: {
@@ -421,6 +443,7 @@ export default {
       columns,
       taskTypeMap,
       orderStatusMap,
+      nameType,
       statistic: null,
       numbers: null,
       editVisible: false,

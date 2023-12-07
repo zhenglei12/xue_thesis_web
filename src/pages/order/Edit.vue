@@ -12,19 +12,39 @@
       <a-row>
         <a-col span="12">
           <a-form-model-item label="客户名称" required>
-            <a-input v-model="form.name" allow-clear />
+            <a-input v-model="form.name" allow-clear/>
           </a-form-model-item>
         </a-col>
         <a-col span="12">
           <a-form-model-item label="合同比例" required>
-            <a-input-number v-model="form.phone" :min="0" :precision="0" />
+            <a-input-number v-model="form.phone" :min="0" :precision="0"/>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col span="12">
+          <a-form-model-item label="客户类型">
+            <a-select v-model="form.name_type" allowClear :dropdownMatchSelectWidth="false">
+              <a-select-option v-for="(option, index) in accountList" :key="index" :value="option.value | string">
+                {{ option.label }}
+              </a-select-option>
+            </a-select>
+          </a-form-model-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-model-item label="客户等级" required>
+            <a-select v-model="form.wr_where" allowClear :dropdownMatchSelectWidth="false">
+              <a-select-option v-for="(option, index) in options" :key="index" :value="option">
+                {{ option }}
+              </a-select-option>
+            </a-select>
           </a-form-model-item>
         </a-col>
       </a-row>
       <a-row>
         <a-col span="12">
           <a-form-model-item label="标的金额">
-            <a-input-number v-model="form.amount" :min="0" :disabled="$auth.isService && isEdit" />
+            <a-input-number v-model="form.amount" :min="0" :disabled="$auth.isService && isEdit"/>
           </a-form-model-item>
         </a-col>
         <a-col span="12">
@@ -141,104 +161,105 @@
                 @preview="toPreview"
             >
               <div v-if="!imgList_1.length">
-                <a-icon type="plus" />
+                <a-icon type="plus"/>
+                <div class="ant-upload-text">上传</div>
+              </div>
+            </a-upload>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <!--        <a-col span="12">-->
+      <!--          <a-form-model-item label="首款日期">-->
+      <!--            <a-date-picker v-model="form.receipt_time" valueFormat="YYYY-MM-DD" />-->
+      <!--          </a-form-model-item>-->
+      <!--        </a-col>-->
+      <a-row>
+        <a-col span="12">
+          <a-form-model-item label="增收截图">
+            <a-upload
+                list-type="picture-card"
+                :file-list="imgList_2"
+                :customRequest="(e) => cusImgUpload('imgList_2', e)"
+                :remove="
+                () => {
+                  imgList_2 = [];
+                }
+              "
+                :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"
+                @preview="toPreview"
+            >
+              <div v-if="!imgList_2.length">
+                <a-icon type="plus"/>
+                <div class="ant-upload-text">上传</div>
+              </div>
+            </a-upload>
+          </a-form-model-item>
+        </a-col>
+      </a-row>
+      <!--      <a-row>-->
+      <!--        <a-col span="12">-->
+      <!--          <a-form-model-item label="二次付款截图">-->
+      <!--            <a-upload-->
+      <!--              list-type="picture-card"-->
+      <!--              :file-list="imgList_2"-->
+      <!--              :customRequest="(e) => cusImgUpload('imgList_2', e)"-->
+      <!--              :remove="-->
+      <!--                () => {-->
+      <!--                  imgList_2 = [];-->
+      <!--                }-->
+      <!--              "-->
+      <!--              :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"-->
+      <!--              @preview="toPreview"-->
+      <!--            >-->
+      <!--              <div v-if="!imgList_2.length">-->
+      <!--                <a-icon type="plus" />-->
+      <!--                <div class="ant-upload-text">上传</div>-->
+      <!--              </div>-->
+      <!--            </a-upload>-->
+      <!--          </a-form-model-item>-->
+      <!--        </a-col>-->
+      <!--        <a-col span="12">-->
+      <!--          <a-form-model-item label="二次收款日期">-->
+      <!--            <a-date-picker v-model="form.twice_time" valueFormat="YYYY-MM-DD" />-->
+      <!--          </a-form-model-item>-->
+      <!--        </a-col>-->
+      <!--      </a-row>-->
+      <a-row>
+        <a-col span="12">
+          <a-form-model-item label="尾款截图">
+            <a-upload
+                list-type="picture-card"
+                :file-list="imgList_3"
+                :customRequest="(e) => cusImgUpload('imgList_3', e)"
+                :remove="
+                () => {
+                  imgList_3 = [];
+                }
+              "
+                :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check == 1 && isEdit"
+                @preview="toPreview"
+            >
+              <div v-if="!imgList_3.length">
+                <a-icon type="plus"/>
                 <div class="ant-upload-text">上传</div>
               </div>
             </a-upload>
           </a-form-model-item>
         </a-col>
         <!--        <a-col span="12">-->
-        <!--          <a-form-model-item label="首款日期">-->
-        <!--            <a-date-picker v-model="form.receipt_time" valueFormat="YYYY-MM-DD" />-->
+        <!--          <a-form-model-item label="尾款日期">-->
+        <!--            <a-date-picker v-model="form.end_time" valueFormat="YYYY-MM-DD" />-->
         <!--          </a-form-model-item>-->
         <!--        </a-col>-->
-        <a-row>
-          <a-col span="12">
-            <a-form-model-item label="二次付款截图">
-              <a-upload
-                  list-type="picture-card"
-                  :file-list="imgList_2"
-                  :customRequest="(e) => cusImgUpload('imgList_2', e)"
-                  :remove="
-                () => {
-                  imgList_2 = [];
-                }
-              "
-                  :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"
-                  @preview="toPreview"
-              >
-                <div v-if="!imgList_2.length">
-                  <a-icon type="plus" />
-                  <div class="ant-upload-text">上传</div>
-                </div>
-              </a-upload>
-            </a-form-model-item>
-          </a-col>
-        </a-row>
-        <!--      <a-row>-->
-        <!--        <a-col span="12">-->
-        <!--          <a-form-model-item label="二次付款截图">-->
-        <!--            <a-upload-->
-        <!--              list-type="picture-card"-->
-        <!--              :file-list="imgList_2"-->
-        <!--              :customRequest="(e) => cusImgUpload('imgList_2', e)"-->
-        <!--              :remove="-->
-        <!--                () => {-->
-        <!--                  imgList_2 = [];-->
-        <!--                }-->
-        <!--              "-->
-        <!--              :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check != -1 && R.finance_check != 0 && isEdit"-->
-        <!--              @preview="toPreview"-->
-        <!--            >-->
-        <!--              <div v-if="!imgList_2.length">-->
-        <!--                <a-icon type="plus" />-->
-        <!--                <div class="ant-upload-text">上传</div>-->
-        <!--              </div>-->
-        <!--            </a-upload>-->
-        <!--          </a-form-model-item>-->
-        <!--        </a-col>-->
-        <!--        <a-col span="12">-->
-        <!--          <a-form-model-item label="二次收款日期">-->
-        <!--            <a-date-picker v-model="form.twice_time" valueFormat="YYYY-MM-DD" />-->
-        <!--          </a-form-model-item>-->
-        <!--        </a-col>-->
-        <!--      </a-row>-->
-        <a-row>
-          <a-col span="12">
-            <a-form-model-item label="尾款截图">
-              <a-upload
-                  list-type="picture-card"
-                  :file-list="imgList_3"
-                  :customRequest="(e) => cusImgUpload('imgList_3', e)"
-                  :remove="
-                () => {
-                  imgList_3 = [];
-                }
-              "
-                  :disabled="!($auth.isFinance || $auth.isAdmin) && R.finance_check == 1 && isEdit"
-                  @preview="toPreview"
-              >
-                <div v-if="!imgList_3.length">
-                  <a-icon type="plus" />
-                  <div class="ant-upload-text">上传</div>
-                </div>
-              </a-upload>
-            </a-form-model-item>
-          </a-col>
-          <!--        <a-col span="12">-->
-          <!--          <a-form-model-item label="尾款日期">-->
-          <!--            <a-date-picker v-model="form.end_time" valueFormat="YYYY-MM-DD" />-->
-          <!--          </a-form-model-item>-->
-          <!--        </a-col>-->
-          <a-col span="12">
-            <a-form-model-item label="客户等级" required>
-              <a-input v-model="form.wr_where" allow-clear />
-            </a-form-model-item>
-          </a-col>
-        </a-row>
-        <a-form-model-item :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" label="备注">
-          <a-textarea v-model="form.remark" :autoSize="{ minRows: 3, maxRows: 5 }" placeholder="备注" />
-        </a-form-model-item>
+        <!--          <a-col span="12">-->
+        <!--            <a-form-model-item label="客户等级" required>-->
+        <!--              <a-input v-model="form.wr_where" allow-clear/>-->
+        <!--            </a-form-model-item>-->
+        <!--          </a-col>-->
+      </a-row>
+      <a-form-model-item :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" label="备注">
+        <a-textarea v-model="form.remark" :autoSize="{ minRows: 3, maxRows: 5 }" placeholder="备注"/>
+      </a-form-model-item>
     </a-form-model>
 
     <!-- 图片预览 -->
@@ -250,7 +271,7 @@
 import editMixin from "../../mixins/edit";
 import OrderApi from "../../apis/order";
 import utils from "../../libs/utils";
-import { taskTypeMap, payTypeMap, accountTypeMap } from "./mapping";
+import {taskTypeMap, payTypeMap, accountTypeMap} from "./mapping";
 import upload from "../../libs/upload";
 
 export default {
@@ -266,6 +287,7 @@ export default {
       imgList_3: [],
       askList: [],
       form: {},
+      options: ["C1", "C2", "B1", "B2", "A1", "A2", "S1", "S2", "S3"],
       previewVisible: false,
       previewUrl: "",
     };
@@ -293,6 +315,7 @@ export default {
           receipt_time: this.R.receipt_time,
           twice_time: this.R.twice_time,
           end_time: this.R.end_time,
+          name_type: this.R.name_type && this.R.name_type.toString(),
           receipt_account_type: this.R.receipt_account_type && this.R.receipt_account_type.toString(),
         };
         this.askList = this.R.detail_re
@@ -344,7 +367,7 @@ export default {
     },
   },
   methods: {
-    async cusImgUpload(fileList, { file }) {
+    async cusImgUpload(fileList, {file}) {
       file.url = await utils.getBase64(file);
       this[fileList] = [file];
     },
@@ -366,13 +389,13 @@ export default {
             this.form.twice_img = upload.getRources(this.imgList_2)[0];
             this.form.receipt_account = upload.getRources(this.imgList_3)[0];
             if (this.isEdit) {
-              return OrderApi.update({ ...this.form }).then((res) => {
+              return OrderApi.update({...this.form}).then((res) => {
                 this.$message.success("保存成功");
                 this.$emit("refresh", res);
                 this.close();
               });
             } else {
-              return OrderApi.create({ ...this.form }).then((res) => {
+              return OrderApi.create({...this.form}).then((res) => {
                 this.$message.success("保存成功");
                 this.$emit("refresh", res);
                 this.close();
