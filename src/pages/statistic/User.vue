@@ -10,9 +10,10 @@
     <div class="cus-table-header">
       <div class="statistic">
         <span>
-          <span>总金额：{{ amountCount }}</span>
-          <span>已回收金额：{{ receivedAmountCount }}</span>
-          <span>总尾款金额：{{ receiptAmountCount }}</span>
+          <span>总标金额：{{ amountCount }}</span>
+          <span>订金金额：{{ receivedAmountCount }}</span>
+          <span>回款金额：{{ receiptAmountCount }}</span>
+          <span>尾款金额：{{ endAmountCount }}</span>
           <span>总售后金额：{{ afterAmountCount }}</span>
         </span>
       </div>
@@ -67,16 +68,20 @@ const columns = [
     dataIndex: "staff_name",
   },
   {
-    title: "总金额",
+    title: "标总金额",
     dataIndex: "amount",
   },
   {
-    title: "已回收金额",
+    title: "订金金额",
     dataIndex: "received_amount",
   },
   {
+    title: "回款金额",
+    dataIndex: "twice_received_amount",
+  },
+  {
     title: "尾款金额",
-    dataIndex: "receipt_time",
+    dataIndex: "end_received_amount",
   },
   {
     title: "售后金额",
@@ -97,6 +102,7 @@ export default {
       columns,
       amountCount: 0,
       receivedAmountCount: 0,
+      endAmountCount: 0,
       receiptAmountCount: 0,
       afterAmountCount: 0,
     };
@@ -169,7 +175,8 @@ export default {
       ).then((res) => {
         this.amountCount = res.amount_count;
         this.receivedAmountCount = res.received_amount_count;
-        this.receiptAmountCount = res.receipt_amount_count;
+        this.receiptAmountCount = res.end_twice_amount_count;
+        this.endAmountCount = res.end_received_amount_count;
         this.afterAmountCount = res.after_amount_count;
         const list = res.list;
         list.data.forEach(

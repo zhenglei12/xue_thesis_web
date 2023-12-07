@@ -34,19 +34,19 @@
 
 <script>
 const condition = [
-  {
-    key: "subject",
-    placeholder: "题目",
-  },
-  {
-    key: "classify_id",
-    type: "cascader",
-    placeholder: "文档分类",
-    changeOnSelect: true,
-    options: [],
-    labelKey: "name",
-    valueKey: "id",
-  },
+  // {
+  //   key: "subject",
+  //   placeholder: "题目",
+  // },
+  // {
+  //   key: "classify_id",
+  //   type: "cascader",
+  //   placeholder: "文档分类",
+  //   changeOnSelect: true,
+  //   options: [],
+  //   labelKey: "name",
+  //   valueKey: "id",
+  // },
 ];
 
 const columns = [
@@ -54,25 +54,25 @@ const columns = [
     title: "ID",
     dataIndex: "id",
   },
-  {
-    title: "题目",
-    dataIndex: "subject",
-  },
-  {
-    title: "字数",
-    dataIndex: "word_number",
-  },
-  {
-    title: "文档分类",
-    dataIndex: "classify.name",
-  },
+  // {
+  //   title: "题目",
+  //   dataIndex: "subject",
+  // },
+  // {
+  //   title: "字数",
+  //   dataIndex: "word_number",
+  // },
+  // {
+  //   title: "文档分类",
+  //   dataIndex: "classify.name",
+  // },
   {
     title: "状态",
     dataIndex: "status",
     scopedSlots: { customRender: "status" },
   },
   {
-    title: "稿件下载",
+    title: "跟踪日志文件下载",
     dataIndex: "manuscript",
     scopedSlots: { customRender: "file" },
   },

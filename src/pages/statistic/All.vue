@@ -30,7 +30,7 @@ const condition = [
   {
     key: "name",
     type: "select",
-    placeholder: "编辑名称",
+    placeholder: "法务名称",
     options: [],
     labelKey: "name",
     valueKey: "name",
@@ -39,11 +39,11 @@ const condition = [
     key: "_date",
     type: "date-in",
   },
-  {
-    key: "submission_time",
-    type: "date",
-    placeholder: "截止日期",
-  },
+  // {
+  //   key: "submission_time",
+  //   type: "date",
+  //   placeholder: "截止日期",
+  // },
 ];
 
 const columns = [
@@ -52,21 +52,21 @@ const columns = [
     dataIndex: "id",
   },
   {
-    title: "编辑名称",
+    title: "法务名称",
     dataIndex: "edit_name",
   },
-  {
-    title: "待提交数量",
-    dataIndex: "all_waiting_commit",
-  },
+  // {
+  //   title: "待提交数量",
+  //   dataIndex: "all_waiting_commit",
+  // },
   {
     title: "已提交数量",
     dataIndex: "all_commit",
   },
-  {
-    title: "待修改数量",
-    dataIndex: "all_waiting_alter",
-  },
+  // {
+  //   title: "待修改数量",
+  //   dataIndex: "all_waiting_alter",
+  // },
   {
     title: "已完成数量",
     dataIndex: "all_finish",

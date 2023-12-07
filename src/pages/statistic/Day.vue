@@ -30,7 +30,7 @@ const condition = [
   {
     key: "name",
     type: "select",
-    placeholder: "编辑名称",
+    placeholder: "法务名称",
     options: [],
     labelKey: "name",
     valueKey: "name",
@@ -48,7 +48,7 @@ const columns = [
     dataIndex: "id",
   },
   {
-    title: "编辑名称",
+    title: "法务名称",
     dataIndex: "edit_name",
   },
   {
@@ -58,18 +58,18 @@ const columns = [
         title: "提交数量",
         dataIndex: "commit",
       },
-      {
-        title: "提交字数",
-        dataIndex: "commit_word_number",
-      },
-      {
-        title: "修改数量",
-        dataIndex: "alter_number",
-      },
-      {
-        title: "修改字数",
-        dataIndex: "alter_word_number",
-      },
+      // {
+      //   title: "提交字数",
+      //   dataIndex: "commit_word_number",
+      // },
+      // {
+      //   title: "修改数量",
+      //   dataIndex: "alter_number",
+      // },
+      // {
+      //   title: "修改字数",
+      //   dataIndex: "alter_word_number",
+      // },
     ],
   },
   {
@@ -83,10 +83,10 @@ const columns = [
         title: "金额",
         dataIndex: "amount",
       },
-      {
-        title: "字数",
-        dataIndex: "word_number",
-      },
+      // {
+      //   title: "字数",
+      //   dataIndex: "word_number",
+      // },
     ],
   },
 ];
