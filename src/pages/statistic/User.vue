@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="cus-table-header">
-      <list-search
-        v-model="search"
-        :condition="condition"
-        :collection="collection"
-      ></list-search>
+      <list-search v-model="search" :condition="condition" :collection="collection"></list-search>
     </div>
     <div class="cus-table-header">
       <div class="statistic">
@@ -17,12 +13,7 @@
           <span>总售后金额：{{ afterAmountCount }}</span>
         </span>
       </div>
-      <a-button
-        v-acl="'staff-statistics.export'"
-        type="primary"
-        @click="toExport()"
-        >导出</a-button
-      >
+      <a-button v-acl="'staff-statistics.export'" type="primary" @click="toExport()">导出</a-button>
     </div>
     <a-table
       :columns="columns"
@@ -177,13 +168,9 @@ export default {
         this.receivedAmountCount = res.received_amount_count;
         this.receiptAmountCount = res.end_twice_amount_count;
         this.endAmountCount = res.end_received_amount_count;
-        this.afterAmountCount = res.after_amount_count;
+        this.afterAmountCount = res.end_after_banlace_count;
         const list = res.list;
-        list.data.forEach(
-          (_, i) =>
-            (_.id =
-              (this.collection.page - 1) * this.collection.pageSize + i + 1)
-        );
+        list.data.forEach((_, i) => (_.id = (this.collection.page - 1) * this.collection.pageSize + i + 1));
         this.collection.list = list.data;
         this.collection.total = list.total;
         this.collection.loading = false;
