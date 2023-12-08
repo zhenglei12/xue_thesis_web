@@ -183,7 +183,7 @@ export default {
   }
 }
 
-:deep(.ant-form-item) {
+/deep/ .ant-form-item {
   display: flex;
 
   &-label {
