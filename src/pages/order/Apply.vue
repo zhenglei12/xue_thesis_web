@@ -148,7 +148,7 @@ export default {
       const { id } = this.$route.params;
       const params = { order_id: id, ...this.form };
       params.special_ask = params.special_ask?.join(",");
-      // await orderApi.apply(params);
+      await orderApi.apply(params);
       this.visible = true;
     },
   },
