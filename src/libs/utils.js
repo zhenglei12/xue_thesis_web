@@ -77,7 +77,26 @@ class UtilsManager {
   copy(str) {
     return new Promise((resolve, reject) => {
       try {
-        navigator.clipboard.writeText(str);
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(str);
+        } else {
+          let textArea = document.createElement("textarea");
+          textArea.value = str;
+          textArea.style.position = "fixed";
+          textArea.style.top = 0;
+          textArea.style.left = 0;
+          textArea.style.width = "2em";
+          textArea.style.height = "2em";
+          textArea.style.padding = 0;
+          textArea.style.border = "none";
+          textArea.style.outline = "none";
+          textArea.style.boxShadow = "none";
+          textArea.style.background = "transparent";
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textArea);
+        }
         resolve();
       } catch (e) {
         reject(e);
