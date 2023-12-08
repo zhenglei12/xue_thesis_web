@@ -148,7 +148,7 @@ export default {
       const { id } = this.$route.params;
       const params = { order_id: id, ...this.form };
       params.special_ask = params.special_ask?.join(",");
-      await orderApi.apply(params);
+      // await orderApi.apply(params);
       this.visible = true;
     },
   },
@@ -170,11 +170,12 @@ export default {
 
 .popup {
   background: rgba(0, 0, 0, 0.8);
-  position: absolute;
+  position: fixed;
   inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 
   .tip {
     background: #ffffff;
