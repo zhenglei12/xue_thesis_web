@@ -32,8 +32,8 @@
           </a-form-model-item>
         </a-col>
         <a-col span="12">
-          <a-form-model-item label="客户等级" required>
-            <a-select v-model="form.wr_where" allowClear :dropdownMatchSelectWidth="false">
+          <a-form-model-item label="客户等级">
+            <a-select v-model="form.wr_where" allowClear :dropdownMatchSelectWidth="false" :disabled="$auth.isService">
               <a-select-option v-for="(option, index) in options" :key="index" :value="option">
                 {{ option }}
               </a-select-option>
