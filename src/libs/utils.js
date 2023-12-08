@@ -73,6 +73,17 @@ class UtilsManager {
   uuid() {
     return `${S4()}${S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`;
   }
+
+  copy(str) {
+    return new Promise((resolve, reject) => {
+      try {
+        navigator.clipboard.writeText(str);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }
 
 export default new UtilsManager();

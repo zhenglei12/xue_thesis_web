@@ -98,21 +98,26 @@ const routes = [
         name: "403",
         component: () => import("./pages/exception/403"),
       },
-      {
-        path: "/404",
-        name: "404",
-        component: () => import("./pages/exception/404"),
-      },
-      {
-        path: "*",
-        redirect: "/404",
-      },
     ],
   },
   {
     path: "/login",
     name: "login",
     component: () => import("./pages/Login"),
+  },
+  {
+    path: "/apply/:id",
+    name: "apply",
+    component: () => import("./pages/order/Apply"),
+  },
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("./pages/exception/404"),
+  },
+  {
+    path: "*",
+    redirect: "/404",
   },
 ];
 
@@ -133,9 +138,13 @@ const router = new Router({
   routes,
 });
 
+const noAuth = ["login", "apply", "404"];
+
 router.beforeEach((to, _from, next) => {
   document.title = (to.meta && to.meta.title) || "法律系统";
-  if (to.name != "login") {
+  if (noAuth.includes(to.name)) {
+    next();
+  } else {
     Promise.all([Auth.check(), Acl.check()])
       .then(() => {
         if (to.meta && to.meta.acl && !Acl.verify(to.meta.acl)) {
@@ -151,8 +160,6 @@ router.beforeEach((to, _from, next) => {
           name: "login",
         });
       });
-  } else {
-    next();
   }
 });
 

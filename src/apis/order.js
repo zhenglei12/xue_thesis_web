@@ -27,4 +27,6 @@ export default {
     }),
   after: (data) => http.post("api/order/after", data),
   grade: (data) => http.post("api/order/hard_grade", data),
+  apply: (data) => http.post("api/order/from", data),
+  applyDetail: (order_id) => http.post("api/order/from/detail", { order_id }),
 };
